@@ -1,0 +1,11 @@
+[project]
+name = "rag-lanchain-local-llm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=1.0.3",
+    "langchain>=0.3.23",
+    "pypdf>=5.4.0",
+]
