@@ -24,6 +24,7 @@ CHROMA_PATH = "db"
 COLLECTION_NAME = "all-mpnet-base-v2"
 MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
 
+
 def main():
     documents = load_documents_from_directory(DATA_FOLDER)
     print(f"Loaded {len(documents)} documents from {DATA_FOLDER}")
@@ -53,5 +54,17 @@ def main():
     print(formatted_response)
 
 
+def main_hf():
+    from langchain_huggingface.embeddings import HuggingFaceEmbeddings
+
+    model_name = "HuggingFaceTB/SmolLM2-1.7B-Instruct"
+    hf_embeddings = HuggingFaceEmbeddings(
+        model_name=model_name,
+    )
+    texts = ["Hello, world!", "How are you?"]
+    embeddings = hf_embeddings.embed_documents(texts)
+    print(embeddings)
+
+
 if __name__ == "__main__":
-    main()
+    main_hf()
