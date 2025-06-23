@@ -5,6 +5,9 @@ from text_splitter import split_documents
 from langchain.vectorstores.chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
+from chromadb.config import Settings
+import chromadb
+
 
 DATA_FOLDER = "data"
 
@@ -32,9 +35,11 @@ def main():
     chunks = split_documents(documents)
     print(f"Splitting {len(documents)} documents into chunks {len(chunks)}...")
     add_to_vector_db(chunks, collection_name=COLLECTION_NAME)
+    chroma_client = chromadb.PersistentClient(path=CHROMA_PATH, settings=Settings(allow_reset=True))
 
     embedding_function = get_embeddings()
     db = Chroma(
+        client=chroma_client,
         persist_directory=CHROMA_PATH,
         embedding_function=embedding_function,
         collection_name=COLLECTION_NAME,
@@ -67,4 +72,4 @@ def main_hf():
 
 
 if __name__ == "__main__":
-    main_hf()
+    main()
